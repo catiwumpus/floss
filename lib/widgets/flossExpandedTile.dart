@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class FlossExpandedTile extends StatelessWidget {
+
+  String _number = "";
+  String _name = "";
+  int _quantity = 0;
+
+  FlossExpandedTile(this._name, this._number, this._quantity);
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -14,15 +21,15 @@ class FlossExpandedTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              "150",
+              _number,
               style: TextStyle(color: Colors.black),
             ),
             Text(
-              "Red-Bright",
+              _name,
               style: TextStyle(color: Colors.black),
             ),
             Text(
-              "Owned: 2",
+              "Owned: " + _quantity.toString(),
               style: TextStyle(color: Colors.black),
             ),
           ],
