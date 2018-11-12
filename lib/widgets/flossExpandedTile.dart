@@ -28,23 +28,30 @@ class _FlossExpandedTileState extends State<FlossExpandedTile> {
         color: Color.fromRGBO(0, 0, 0, .3),
       ))),
       child: ExpansionTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              widget._number,
-              style: TextStyle(color: Colors.black),
-            ),
-            Text(
-              widget._name,
-              style: TextStyle(color: Colors.black),
-            ),
-            Text(
-              "Owned: " + _quantity.toString(),
-              style: TextStyle(color: Colors.black),
-            ),
-          ],
-        ),
+          Text(
+            widget._number,
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                widget._name,
+                style: TextStyle(color: Colors.blueGrey),
+              ),
+              Text(
+                "Owned: " + _quantity.toString(),
+                style: TextStyle(color: Colors.black),
+              ),
+            ],
+          )
+        ]),
         leading: Container(
           width: 50.0,
           height: 50.0,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/shoppingListTile.dart';
 
 class ShoppingListPage extends StatelessWidget {
   @override
@@ -9,11 +10,7 @@ class ShoppingListPage extends StatelessWidget {
         title: Text("Shopping List"),
         backgroundColor: Theme.of(context).accentColor,
       ),
-      body: Container(
-        child: Center(
-          child: Text("TODO"),
-        ),
-      ),
+      body: ShoppingListTile("Bobby", "1822", Color.fromRGBO(255, 176, 45, 1.0)),
     );
   }
 }
