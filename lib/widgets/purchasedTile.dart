@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import '../libraries/data.dart' as data;
 
-class ShoppingListTile extends StatefulWidget {
+class PurchasedTile extends StatefulWidget {
   final String _name;
   final String _number;
   final Color _color;
 
-  ShoppingListTile(this._name, this._number, this._color);
+  PurchasedTile(this._name, this._number, this._color);
 
   @override
   State<StatefulWidget> createState() {
-    return ShoppingListTileState();
+    return PurchasedTileState();
   }
 }
 
-class ShoppingListTileState extends State<ShoppingListTile> {
-  bool _value = false;
+class PurchasedTileState extends State<PurchasedTile> {
+  bool _value = true;
   bool _selected = false;
 
   @override
@@ -43,8 +43,8 @@ class ShoppingListTileState extends State<ShoppingListTile> {
         setState(() {
          int _index = data.shoppingList.indexOf(widget);
           _value = value;
-        data.shoppingList.removeAt(_index);
-        data.purchasedList.add(widget);
+        data.purchasedList.removeAt(_index);
+        data.shoppingList.add(widget);
         });
       },
       selected: _selected,

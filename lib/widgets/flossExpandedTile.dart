@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../libraries/data.dart' as data;
+import '../widgets/shoppingListTile.dart';
 
 class FlossExpandedTile extends StatefulWidget {
   final String _number;
@@ -9,7 +11,6 @@ class FlossExpandedTile extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _FlossExpandedTileState();
   }
 }
@@ -17,9 +18,12 @@ class FlossExpandedTile extends StatefulWidget {
 class _FlossExpandedTileState extends State<FlossExpandedTile> {
   int _quantity = 0;
 
+  void _addToShoppingList(Widget shoppingListItem) {
+    data.shoppingList.add(shoppingListItem);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       decoration: new BoxDecoration(
           border: new Border(
@@ -74,7 +78,9 @@ class _FlossExpandedTileState extends State<FlossExpandedTile> {
                     Text('Add to Shopping List:'),
                     IconButton(
                       icon: Icon(Icons.add_circle),
-                      onPressed: () {},
+                      onPressed: () {
+                        _addToShoppingList(ShoppingListTile(widget._name, widget._number, widget._color));
+                      },
                     ),
                   ],
                 ),

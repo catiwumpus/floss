@@ -1,35 +1,85 @@
 import 'package:flutter/material.dart';
-import './flossExpandedTile.dart';
+import '../models/floss_model.dart';
+import '../bloc/floss_bloc.dart';
+import '../resources/floss_data.dart';
 
 class FlossList extends StatelessWidget {
   @override
-    Widget build(BuildContext context) {
-      // TODO: implement build
-      return Container(
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: floss.length,
-          itemBuilder: (BuildContext context, int index) {
-            return floss[index];
-          },
-        ),
-      );
-    }
+  Widget build(BuildContext context) {
+    bloc.fetchFlossList();
+    return StreamBuilder(
+        stream: bloc.allFloss,
+        builder: (context, AsyncSnapshot<Floss> snapshot) {
+          if (snapshot.hasData) {
+            return buildList(snapshot);
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+          return Center(child: CircularProgressIndicator());
+        });
+  }
 
-   final List<Widget> floss = [
-    FlossExpandedTile("Ecru/Off-White", "Ecru", Color.fromRGBO(255, 247, 230, 1.0)),
-    FlossExpandedTile("White", "Blanc", Color.fromRGBO(238, 238, 238, 1.0)),
-    FlossExpandedTile("Snow White", "B5200", Color.fromRGBO(252, 252, 255, 1.0)),
-    FlossExpandedTile("White", "White", Color.fromRGBO(255, 255, 255, 1.0)),
-    FlossExpandedTile("Red-Bright", "150", Color.fromRGBO(207, 0, 83, 1.0)),
-    FlossExpandedTile("Pink", "151", Color.fromRGBO(255, 203, 215, 1.0)),
-    FlossExpandedTile("Tawny-DK", "152", Color.fromRGBO(255, 161, 161, 1.0)),
-    FlossExpandedTile("Lilac", "153", Color.fromRGBO(234, 197, 235, 1.0)),
-    FlossExpandedTile("Red-VY DK", "154", Color.fromRGBO(75, 35, 58, 1.0)),
-    FlossExpandedTile("Forget-me-not Blue", "155", Color.fromRGBO(151, 116, 182, 1.0)),
-    FlossExpandedTile("Blue-MED", "156", Color.fromRGBO(142, 160, 223, 1.0)),
-    FlossExpandedTile("Blue-LT", "157", Color.fromRGBO(181, 184, 234, 1.0)),
-    FlossExpandedTile("Blue-DK", "158", Color.fromRGBO(57, 48, 104, 1.0))
-  ];
+  Widget buildList(AsyncSnapshot<Floss> snapshot) {
+    return ListView.separated(
+      separatorBuilder: (context, index) => Divider(
+        color: Colors.grey,
+      ),
+      itemCount: flossList.length,
+      itemBuilder: (BuildContext context, int index) {
+        print(snapshot.data.floss.length);
+        // final floss = snapshot.data.floss[index];
+        FlossModel floss = flossList[index];
+          return ListTile(
+            leading: Container(
+              width: 50.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                  color: Color.fromRGBO(
+                      floss.color.red,
+                      floss.color.green,
+                      floss.color.blue,
+                      1),
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  border: Border.all(color: Colors.black, width: 1.0)),
+            ),
+            title: Text(floss.number),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+              Text(floss.name),
+              Text('Owned: ' + floss.owned.toString())
+            ],),
+            trailing: IconButton(
+              icon: Icon(Icons.add_shopping_cart),
+              onPressed: () {
+                floss.inCart = true;
+                floss.owned = floss.owned + 1;
+              },
+            ),
+            onTap: () {
+              _settingModalBottomSheet(context);
+            },
+          );
+          
+      },
+    );
+  }
+
+  void _settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            child:  Wrap(
+              children: <Widget>[
+                 ListTile(
+                  leading: Icon(Icons.edit),
+                  title: Text('Edit'),
+                  onTap: () => {},
+                ),
+              ],
+            ),
+          );
+        });
+  }
 }

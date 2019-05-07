@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
-import '../widgets/shoppingListTile.dart';
+import '../libraries/data.dart' as data;
 
-class ShoppingListPage extends StatelessWidget {
+class ShoppingListPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return ShoppingListPageState();
+  }
+}
+
+class ShoppingListPageState extends State<ShoppingListPage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping List"),
         backgroundColor: Theme.of(context).accentColor,
       ),
-      body: ShoppingListTile("Bobby", "1822", Color.fromRGBO(255, 176, 45, 1.0)),
+      body: Column(
+        children: [
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: data.shoppingList.length,
+            itemBuilder: (BuildContext context, int shoppingIndex) {
+              return data.shoppingList[shoppingIndex];
+            },
+          ),
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: data.purchasedList.length,
+            itemBuilder: (BuildContext context, int purchasedIndex) {
+              return data.purchasedList[purchasedIndex];
+            },
+          ),
+        ],
+      ),
     );
   }
 }
